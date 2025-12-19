@@ -16,7 +16,11 @@ MY_NAME = f"{socket.gethostname()}-{random.randint(100, 999)}"
 MY_DATA_PORT = 0
 IS_DOWNLOADING = False  # דגל למניעת לולאה
 
+gui_queue = queue.Queue()
 
+def log_to_gui(message):
+    gui_queue.put(message)
+    print(message) # נשאיר גם בטרמינל ליתר ביטחון
 class SyncHandler(FileSystemEventHandler):
     def __init__(self, folder_to_watch):
         self.folder_to_watch = folder_to_watch
@@ -253,4 +257,5 @@ def start_all_services():
 if __name__ == "__main__":
     start_all_services()
     while True:
+
         time.sleep(1)
